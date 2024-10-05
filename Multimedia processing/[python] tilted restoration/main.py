@@ -40,16 +40,17 @@ angleX = sum(angleXs)/len(angleXs)
 angleY = sum(angleYs)/len(angleYs)
 
 # recover
+w2, h2 = int(w/2), int(h/2)
 cx, sx, cy, sy = math.cos(angleX), math.sin(angleX), math.cos(angleY), math.sin(angleY)
 imgMod = np.zeros((h, w, 3), np.uint8)
-for x in range(w):
-    for y in range(h):
-        xx = int((x*cy-y*sy)/(cx*cy-sx*sy))
-        yy = int((x*sx-y*cx)/(sx*sy-cx*cy))
+for x in range(-w2, w2):
+    for y in range(-h2, h2):
+        xx = int(x*cx+y*sy+w2)
+        yy = int(x*sx+y*cy+h2)
         
         if (not 0<=xx<w or not 0<=yy<h): continue
 
-        imgMod[yy, xx, :] = img[y, x, :]
+        imgMod[y+h2, x+w2, :] = img[yy, xx, :]
     
 merged = cv2.resize(np.hstack((img,imgLine, imgMod)), (w*3*5, h*5))
 
