@@ -1,13 +1,21 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
-  name='tools',
-  version='0.0.1',
-  description='install libs',
-  url = 'https://github.com/serafi1204/Tools.git',
-  auther='None',
-  auther='None',
-  install_requires=[
-    
-  ]
+    name='orientedCompression',
+    version='0.1.0',
+    author='None',
+    author_email='None',
+    description='PyTorch utility to freeze selected Conv2d kernel weights during training',
+    long_description=open('README.md', encoding='utf-8').read(),
+    long_description_content_type='text/markdown',
+    py_modules=['orientedCompression'],
+    install_requires=[
+        'torch>=1.7.0'
+    ],
+    python_requires='>=3.7',
+    classifiers=[
+        'Programming Language :: Python :: 3',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+    ],
 )
