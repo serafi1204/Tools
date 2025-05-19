@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-class orientedCompression():
+class OrientedCompression():
     def __init__(self, model:nn.Module, *filter):
         self.model = model
         self.dic = self.getParamMap(model, *filter)
