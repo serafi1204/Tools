@@ -1,1 +1,3 @@
-from .orientedCompression import orientedCompression
+from .orientedCompression import OrientedCompression
+
+__all__ = ["OrientedCompression"]
