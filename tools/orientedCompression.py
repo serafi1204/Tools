@@ -7,6 +7,7 @@ class OrientedCompression():
         self.model = model
         self.dic = self.getParamMap(model, *filter)
 
+    @staticmethod
     def getParamMap(model:nn.Module, *filters):
         freeze_weights = []
         
@@ -25,14 +26,15 @@ class OrientedCompression():
                             for func in filters:
                                 if (not func(val)): break
                             else:
-                                freeze_weights.append([key, val])
+                                freeze_weights.append((key, val))
                                 cnt += 1
             
             print(f"Conv Layer: {name}, Weight shape: {weight.shape} / selected params: {cnt}")
         
         return freeze_weights
     
-    def backward(self):
-        with torch.no_grad():
-            for (module, out_ch, in_ch, i, j), val in self.dic:
-                module.weight[out_ch, in_ch, i, j] = val
+    def backward(self, fixed_value=None):
+      with torch.no_grad():
+          for (out_ch, in_ch, i, j), val in self.dic:
+              val = fixed_value if (fixed_value is not None) else val
+              self.model.conv.weight[out_ch, in_ch, i, j] = val
